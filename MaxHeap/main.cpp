@@ -9,6 +9,15 @@
 #include <iostream>
 using namespace std;
 
+#define Max_Heap 100
+int heap[Max_Heap] = {'\0'}, current = 0;
+
+bool isEmpty();
+bool isFull();
+void push(int insert_Num);
+int pop();
+void print_heap();
+
 int main(int argc, const char * argv[]) {
     
     while (1) {
@@ -26,15 +35,36 @@ int main(int argc, const char * argv[]) {
         
         int insert_number = 0;
         if (chose_funs == 1) {
+            
+            if (isFull()) {
+                cout << "the heap is FULL!" <<endl;
+                continue;
+            }
+            
             cout << "input a number which you want to add : ";
             cin >> insert_number;
-            //insert()
+            
+            push(insert_number);
+            
         } else if (chose_funs == 2) {
-            //delete()
+            if (isEmpty()) {
+                cout << "the heap is EMPTY!" << endl;
+                continue;
+            }
+            
+            pop();
+            
         } else if (chose_funs == 3) {
-            //print_heap()
+            if (isEmpty()) {
+                cout << "the heap is EMPTY!" << endl;
+                continue;
+            }
+            
+            print_heap();
+            
         } else if (chose_funs == 4) {
             break;
+            
         } else {
             cout << "Error!!\nPlease input the number at the range of 1-4, Try again" << endl;
             cout << "choose a function you want : ";
@@ -45,4 +75,30 @@ int main(int argc, const char * argv[]) {
     cout << "ByeBye!" << endl;
     
     return 0;
+}
+
+bool isEmpty() {
+    if (current > 0)
+        return false;
+    else
+        return true;
+}
+
+bool isFull() {
+    if (current + 1 > Max_Heap)
+        return true;
+    else
+        return false;
+}
+
+void push(int insert_Num) {
+    
+}
+
+int pop() {
+    return heap[current];
+}
+
+void print_heap() {
+
 }
