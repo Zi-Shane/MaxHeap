@@ -14,61 +14,48 @@ int heap[Max_Heap] = {'\0'}, current = 0;
 
 bool isEmpty();
 bool isFull();
-void push(int insert_Num);
-int pop();
+void push();
+void pop();
 void print_heap();
 
-int main(int argc, const char * argv[]) {
+int main() {
     
-    while (1) {
-        system("clear");
-        
+    cout << "This is a MaxHeap program\n" << endl;
+    
+    short chose_funs = NULL;
+    while (true) {
         cout << "1. insert a number" << endl;
         cout << "2. delete max" << endl;
         cout << "3. print heap" << endl;
         cout << "4. exit program" << endl;
         
-        short chose_funs = 0;
+        chose_funs = NULL;
         cout << "choose a function you want : ";
         cin >> chose_funs;
-        cout << "the number you have chose is " << chose_funs << endl;
         
-        int insert_number = 0;
+        //1. insert a number
         if (chose_funs == 1) {
-            
-            if (isFull()) {
-                cout << "the heap is FULL!" <<endl;
-                continue;
-            }
-            
-            cout << "input a number which you want to add : ";
-            cin >> insert_number;
-            
-            push(insert_number);
-            
-        } else if (chose_funs == 2) {
-            if (isEmpty()) {
-                cout << "the heap is EMPTY!" << endl;
-                continue;
-            }
-            
+            push();
+            cout << "\n\n";
+        }
+        //2. delete max
+        else if (chose_funs == 2) {
             pop();
-            
-        } else if (chose_funs == 3) {
-            if (isEmpty()) {
-                cout << "the heap is EMPTY!" << endl;
-                continue;
-            }
-            
+            cout << "\n\n";
+        }
+        //3. print heap
+        else if (chose_funs == 3) {
             print_heap();
-            
-        } else if (chose_funs == 4) {
+            cout << "\n\n";
+        }
+        //4. exit
+        else if (chose_funs == 4) {
+            cout << "\n\n";
             break;
-            
-        } else {
-            cout << "Error!!\nPlease input the number at the range of 1-4, Try again" << endl;
-            cout << "choose a function you want : ";
-            cin >> insert_number;
+        }
+        //>4. ERROR
+        else {
+            cout << "Error!!\nPlease input the number at the range of 1-4, Try again\n\n";
         }
     }
     
@@ -78,10 +65,10 @@ int main(int argc, const char * argv[]) {
 }
 
 bool isEmpty() {
-    if (current > 0)
-        return false;
-    else
+    if (current - 1 < 0)
         return true;
+    else
+        return false;
 }
 
 bool isFull() {
@@ -91,14 +78,60 @@ bool isFull() {
         return false;
 }
 
-void push(int insert_Num) {
+void push() {
+    int insert_Num = NULL;
+    int i = NULL;  //i represent child
     
+    if (isFull()) {
+        cout << "the heap is FULL!" <<endl;
+        exit(EXIT_FAILURE);
+    }
+    
+    i = ++current;    //++current means create a hole
+    
+    cout << "input a number which you want to add : ";
+    cin >> insert_Num;
+    
+    //percolate hole up
+    while (i != 1 && insert_Num > heap[i/2]) {
+        heap[i] = heap[i/2];    //parent move to hole
+        i /= 2;
+    }
+    heap[i] = insert_Num;
 }
 
-int pop() {
-    return heap[current];
+void pop() {
+    int parent = 1, child = 2;
+    int temp = NULL;
+    
+    if (isEmpty()) {
+        cout << "the heap is EMPTY!" << endl;
+        exit(EXIT_FAILURE);
+    }
+    
+    cout << "delete the max => " << heap[1] << endl;
+    temp = heap[current--];     //store last number
+    
+    //slide down hole
+    while (child <= current) {
+        if (heap[child] < heap[child + 1])      //find the bigger child
+            child++;
+        if (temp > heap[child])     //last number find correct position
+            break;
+        heap[parent] = heap[child];     //
+        parent = child;                 //  slide down hole
+        child *= 2;     //find new child
+    }
+    heap[parent] = temp;    //put last number into hole
 }
 
 void print_heap() {
-
+    if (isEmpty())
+        cout << "the heap is EMPTY!" << endl;
+    
+    cout << "-----------------------" << endl;
+    for (int i = 1; heap[i] != '\0'; i++) {
+        cout << "Node" << i << "\t->\t" << "value = " << heap[i] << endl;
+    }
+    cout << "-----------------------" << endl;
 }
