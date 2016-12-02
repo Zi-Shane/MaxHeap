@@ -9,7 +9,8 @@
 #include <iostream>
 using namespace std;
 
-#define Max_Heap 100
+#define Max_Heap 5                              //  Heap's capability equal to (Max_Heap - 1),
+                                                //  The first position in the heap is heap[1].
 int heap[Max_Heap] = {'\0'}, current = 0;
 
 bool isEmpty();
@@ -74,7 +75,7 @@ bool isEmpty() {
 }
 
 bool isFull() {
-    if (current + 1 > Max_Heap)
+    if (current + 1 > Max_Heap - 1)
         return true;
     else
         return false;
@@ -96,7 +97,7 @@ void push() {
     
     //percolate hole up
     while (i != 1 && insert_Num > heap[i/2]) {
-        heap[i] = heap[i/2];        //  parent move to hole
+        heap[i] = heap[i/2];        //  parent move down, hole move up
         i /= 2;
     }
     heap[i] = insert_Num;
