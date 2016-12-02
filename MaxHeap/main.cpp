@@ -66,6 +66,7 @@ int main() {
 }
 
 
+
 //heap functions
 bool isEmpty() {
     if (current - 1 < 0)
