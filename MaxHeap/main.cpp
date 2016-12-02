@@ -33,27 +33,27 @@ int main() {
         cout << "choose a function you want : ";
         cin >> chose_funs;
         
-        //1. insert a number
+        //  1. insert a number
         if (chose_funs == 1) {
             push();
             cout << "\n\n";
         }
-        //2. delete max
+        //  2. delete max
         else if (chose_funs == 2) {
             pop();
             cout << "\n\n";
         }
-        //3. print heap
+        //  3. print heap
         else if (chose_funs == 3) {
             print_heap();
             cout << "\n\n";
         }
-        //4. exit
+        //  4. exit
         else if (chose_funs == 4) {
             cout << "\n\n";
             break;
         }
-        //>4. ERROR
+        //  >4. ERROR
         else {
             cout << "Error!!\nPlease input the number at the range of 1-4, Try again\n\n";
         }
@@ -64,6 +64,8 @@ int main() {
     return 0;
 }
 
+
+//heap functions
 bool isEmpty() {
     if (current - 1 < 0)
         return true;
@@ -80,21 +82,21 @@ bool isFull() {
 
 void push() {
     int insert_Num = NULL;
-    int i = NULL;  //i represent child
+    int i = NULL;           //  i represent child
     
     if (isFull()) {
         cout << "the heap is FULL!" <<endl;
-        exit(EXIT_FAILURE);
+        return;
     }
     
-    i = ++current;    //++current means create a hole
+    i = ++current;          //  ++current means create a hole
     
     cout << "input a number which you want to add : ";
     cin >> insert_Num;
     
     //percolate hole up
     while (i != 1 && insert_Num > heap[i/2]) {
-        heap[i] = heap[i/2];    //parent move to hole
+        heap[i] = heap[i/2];        //  parent move to hole
         i /= 2;
     }
     heap[i] = insert_Num;
@@ -106,23 +108,27 @@ void pop() {
     
     if (isEmpty()) {
         cout << "the heap is EMPTY!" << endl;
-        exit(EXIT_FAILURE);
+        return;
     }
     
     cout << "delete the max => " << heap[1] << endl;
-    temp = heap[current--];     //store last number
+    temp = heap[current];         //  store last number
+    heap[current--] = '\0';       //  delete the hole
     
+    if (current + 1 != 1) {       //  if deleted position IS NOT the only one in the heap
     //slide down hole
     while (child <= current) {
-        if (heap[child] < heap[child + 1])      //find the bigger child
+        if (heap[child] < heap[child + 1])      //  find the bigger child
             child++;
-        if (temp > heap[child])     //last number find correct position
+        if (temp > heap[child])                 //  last number find correct position
             break;
-        heap[parent] = heap[child];     //
-        parent = child;                 //  slide down hole
-        child *= 2;     //find new child
+        heap[parent] = heap[child];             //
+        parent = child;                         //  slide down hole
+        child *= 2;                             //  find new child
     }
-    heap[parent] = temp;    //put last number into hole
+    heap[parent] = temp;          //  put last number into hole
+    } else                        //  if delete position IS the only one in the heap
+        heap[1] = '\0';
 }
 
 void print_heap() {
