@@ -25,31 +25,32 @@ int main() {
     
     short chose_funs = NULL;
     while (true) {
-        cout << "1. insert a number" << endl;
-        cout << "2. delete max" << endl;
-        cout << "3. print heap" << endl;
-        cout << "4. exit program" << endl;
+        cout << "1. Insert a number" << endl;
+        cout << "2. Delete max" << endl;
+        cout << "3. Print heap" << endl;
+        cout << "4. Exit program" << endl;
         
         chose_funs = NULL;
-        cout << "choose a function you want : ";
+        cout << "Choose a function you want : ";
         cin >> chose_funs;
+        cout << endl;
         
-        //  1. insert a number
+        //  1. Insert a number
         if (chose_funs == 1) {
             push();
             cout << "\n\n";
         }
-        //  2. delete max
+        //  2. Delete max
         else if (chose_funs == 2) {
             pop();
             cout << "\n\n";
         }
-        //  3. print heap
+        //  3. Print heap
         else if (chose_funs == 3) {
             print_heap();
             cout << "\n\n";
         }
-        //  4. exit
+        //  4. Exit
         else if (chose_funs == 4) {
             cout << "\n\n";
             break;
@@ -67,7 +68,7 @@ int main() {
 
 
 
-//heap functions
+//Heap functions
 bool isEmpty() {
     if (current - 1 < 0)
         return true;
@@ -84,22 +85,23 @@ bool isFull() {
 
 void push() {
     int insert_Num = NULL;
-    int i = NULL;           //  i represent child
+    int i = NULL;
     
     if (isFull()) {
-        cout << "the heap is FULL!" <<endl;
+        cout << "The heap is FULL!" <<endl;
         return;
     }
     
-    i = ++current;          //  ++current means create a hole
+    i = ++current;          //  ++current means create a hole,
+                            //  i means where is the hole
     
-    cout << "input a number which you want to add : ";
+    cout << "Input a number which you want to add : ";
     cin >> insert_Num;
     
     //percolate hole up
     while (i != 1 && insert_Num > heap[i/2]) {
-        heap[i] = heap[i/2];        //  parent move down, hole move up
-        i /= 2;
+        heap[i] = heap[i/2];        //  parent move down,
+        i /= 2;                     //  hole move up
     }
     heap[i] = insert_Num;
 }
@@ -109,11 +111,11 @@ void pop() {
     int temp = NULL;
     
     if (isEmpty()) {
-        cout << "the heap is EMPTY!" << endl;
+        cout << "The heap is EMPTY!" << endl;
         return;
     }
     
-    cout << "delete the max => " << heap[1] << endl;
+    cout << "Delete the max => " << heap[1] << endl;
     temp = heap[current];         //  store last number
     heap[current--] = '\0';       //  delete the hole
     
@@ -135,11 +137,11 @@ void pop() {
 
 void print_heap() {
     if (isEmpty())
-        cout << "the heap is EMPTY!" << endl;
+        cout << "The heap is EMPTY!" << endl;
     
     cout << "-----------------------" << endl;
-    for (int i = 1; heap[i] != '\0'; i++) {
-        cout << "Node" << i << "\t->\t" << "value = " << heap[i] << endl;
+    for (int i = 1; heap[i] != '\0' && i < Max_Heap; i++) {
+        cout << "Node" << i << "\t->\t" << "Value = " << heap[i] << endl;
     }
     cout << "-----------------------" << endl;
 }
