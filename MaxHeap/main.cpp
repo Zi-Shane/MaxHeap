@@ -7,10 +7,11 @@
 //
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-#define Max_Heap 5                              //  Heap's capability equal to (Max_Heap - 1),
-                                                //  The first position in the heap is heap[1].
+#define Max_Heap 100                              //  Heap's capability equal to (Max_Heap - 1),
+                                                  //  The first position in the heap is heap[1].
 int heap[Max_Heap] = {'\0'}, current = 0;
 
 bool isEmpty();
@@ -23,35 +24,35 @@ int main() {
     
     cout << "This is a MaxHeap program\n" << endl;
     
-    short chose_funs = NULL;
+    string chose_funs = "";
     while (true) {
+        cout << "***********************" << endl;
         cout << "1. Insert a number" << endl;
         cout << "2. Delete max" << endl;
         cout << "3. Print heap" << endl;
         cout << "4. Exit program" << endl;
         
-        chose_funs = NULL;
         cout << "Choose a function you want : ";
         cin >> chose_funs;
         cout << endl;
         
         //  1. Insert a number
-        if (chose_funs == 1) {
+        if (chose_funs == "1\0") {
             push();
             cout << "\n\n";
         }
         //  2. Delete max
-        else if (chose_funs == 2) {
+        else if (chose_funs == "2\0") {
             pop();
             cout << "\n\n";
         }
         //  3. Print heap
-        else if (chose_funs == 3) {
+        else if (chose_funs == "3\0") {
             print_heap();
             cout << "\n\n";
         }
         //  4. Exit
-        else if (chose_funs == 4) {
+        else if (chose_funs == "4\0") {
             cout << "\n\n";
             break;
         }
@@ -97,7 +98,11 @@ void push() {
     
     cout << "Input a number which you want to add : ";
     cin >> insert_Num;
-    
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore();
+        return;
+    }
     //percolate hole up
     while (i != 1 && insert_Num > heap[i/2]) {
         heap[i] = heap[i/2];        //  parent move down,
