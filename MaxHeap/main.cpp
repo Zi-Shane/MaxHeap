@@ -22,7 +22,7 @@ void print_heap();
 
 int main() {
     
-    cout << "This is a MaxHeap program\n" << endl;
+    cout << "This is a MaxHeap program\n\n" << endl;
     
     string chose_funs = "";
     while (true) {
@@ -58,7 +58,7 @@ int main() {
         }
         //  >4. ERROR
         else {
-            cout << "Error!!\nPlease input the number at the range of 1-4, Try again\n\n";
+            cout << "\nError!!\nPlease input the number at the range of 1-4, Try again\n\n";
         }
     }
     
@@ -85,24 +85,25 @@ bool isFull() {
 }
 
 void push() {
-    int insert_Num = NULL;
+    int insert_Num;
     int i = NULL;
     
     if (isFull()) {
-        cout << "The heap is FULL!" <<endl;
+        cout << "The heap is FULL!" << endl;
+        return;
+    }
+    
+    cout << "Input a number which you want to add : ";
+    cin >> insert_Num;
+    if (cin.fail()) {       //  input non-number
+        cin.clear();        //  clear error state
+        cin.ignore();       //  eat error input in the buffer
         return;
     }
     
     i = ++current;          //  ++current means create a hole,
-                            //  i means where is the hole
+    //  i means where is the hole
     
-    cout << "Input a number which you want to add : ";
-    cin >> insert_Num;
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore();
-        return;
-    }
     //percolate hole up
     while (i != 1 && insert_Num > heap[i/2]) {
         heap[i] = heap[i/2];        //  parent move down,
